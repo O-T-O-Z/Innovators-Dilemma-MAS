@@ -1,6 +1,7 @@
 import mesa
 from mesa import Model
-from .agents.company import CompanyAgent
+from src.agents.company import CompanyAgent
+
 
 class MarketModel(Model):
     """A model with some number of agents."""
@@ -13,16 +14,21 @@ class MarketModel(Model):
         self.spawn_agents()
 
     def spawn_agents(self):
-        for i in range(self.num_agents):
-            a = CompanyAgent(i, self)
-            self.schedule.add(a)
-            # Add the agent to a random grid cell
-            x = self.random.randrange(self.grid.width)
-            y = self.random.randrange(self.grid.height)
-            self.grid.place_agent(a, (x, y))
+        for id in range(self.num_agents):
+            
+            while True:
+                x = self.random.randrange(self.grid.width)
+                y = self.random.randrange(self.grid.height)
+                if not self.grid[x][y]:
+                    break
+            
+            agent = CompanyAgent(id, self, x, y)
+            
+            self.schedule.add(agent)
+            self.grid.place_agent(agent, agent.position)
 
         self.datacollector = mesa.DataCollector(
-            model_reporters={}, agent_reporters={"Wealth": "wealth"}
+            model_reporters={}, agent_reporters={}
         )
 
     def step(self):
