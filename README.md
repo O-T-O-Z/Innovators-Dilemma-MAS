@@ -3,9 +3,12 @@
 ## Market (Grid)
 
 - each cell: a customer
-    - customers choose company with highest decision factor:
-        - $decision\_factor_{ij} = \alpha\cdot company_j.proximity  + \gamma \cdot naive\_factor() + min(\beta\cdot company_j.performance, satisfaction_i)$
-        - Decision for customer $i$ for company $j$
+    - customers choose company with highest decision factor $df$:
+        - Decision concerning customer $i$ for company $j$
+    $$
+    df_{ij} = \alpha\cdot company_j.proximity + \gamma \cdot naive\_factor() + \\ min(\beta\cdot company_j.performance, customer_i.satisfaction)
+    $$
+    - Customer will choose a company with the highest 
     - init to a random company at first
     - `proximity`: if $\alpha$ is low, then it means that proximity does not matter as much (e.g., online products).
     - `naive_factor`: a random number that influences the decision and potentially models irrational decisions due to psychological factors or beliefs about companies. The main assumption about this constant is that decisions are not always rational, so better companies who have better products are not always be gauranteed to be chosen (e.g., unsustainable, unethical).  
