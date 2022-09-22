@@ -39,9 +39,17 @@ o_j.innovation\_cost = o_j.budget_t * o_j.innovation\_factor \\
 o_j.exploitation\_cost = o_j.budget_t * (1-o_j.innovation\_factor)
 $$
 
+* **Acquisition**: a company can buy another company and obtain its technology. The company also buys its risks and its challenges. The only difference is that the two companies will now share the capital. Acquisition will reduce the buyer's capital.
+
+acquire(a, b) => b loses its identity and a and b will have the identity of a. a loses an amount of capital (b.value).
+
+$$
+o_j.value_t = r_{value} \cdot o_j.value_{t-1} + \alpha\cdot ||o_j.customers|| + \beta\cdot o_j.product.performance_t
+$$
+
+
+* **Alliance**: allies(a, b) => a and b share customers
 
 # Further considerations
-- form alliance -> ? (later addition)
-- acquisition -> ? (later addition)
 - patents
 - Adopt foreigner candidates (later addition)
