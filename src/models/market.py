@@ -14,7 +14,9 @@ class MarketModel(Model):
         num_customers, 
         num_companies,
         width, 
-        height):
+        height,
+        proximity_df,
+        performance_df):
         
         self.num_customers = num_customers
         self.num_companies = num_companies

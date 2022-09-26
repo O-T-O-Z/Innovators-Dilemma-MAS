@@ -13,6 +13,9 @@ class CompanyAgent(Agent):
         self.position = position
         self.capital = random.randint(100, 10000)
         self.gamma = 0.4
+        #self.beta = 
+
+
         self.budget = self.gamma * self.capital
 
         self.product = Product()
@@ -34,6 +37,9 @@ class CompanyAgent(Agent):
         self.capital -= innovation_cost + exploitation_cost
         self.budget = self.gamma * self.capital
         self.product.improve()
+
+    # def _innovate(self):
+    #     self.innovation = 
 
     def buy(self):
         self.capital += self.product.gain_on_product
