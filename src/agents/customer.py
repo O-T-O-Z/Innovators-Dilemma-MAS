@@ -21,7 +21,7 @@ class CustomerAgent(Agent):
         """
         Computes the Euclidean distance from this customer to a Company.
         """
-        return 10000 - np.linalg.norm(company.position - self.position)
+        return np.linalg.norm(company.position - self.position)
         
 
     def _evaluate_decision(self, company: CompanyAgent):
@@ -30,7 +30,7 @@ class CustomerAgent(Agent):
         """
         choice = min(self.rationality * company.product.performance, self.satisfaction)
         proximity = self._evaluate_company_proximity(company)
-        return self.alpha * proximity + choice
+        return self.alpha * (-proximity) + choice
 
     def _choose_company(self):
         companies = self.model.get_companies()

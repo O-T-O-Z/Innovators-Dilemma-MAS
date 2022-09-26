@@ -4,8 +4,8 @@ from src.models.market import MarketModel
 from src.agents.company import CompanyAgent
 #from test import MarketModel
 
-WIDTH = 10
-HEIGHT = 10
+WIDTH = 100
+HEIGHT = 100
 
 def agent_portrayal(agent):
     base_props = {
@@ -28,8 +28,8 @@ server = mesa.visualization.ModularServer(
     MarketModel, 
     [grid], 
     "Market Model", {
-        "num_companies": 5, 
-        "num_customers": 20, 
+        "num_companies": 10, 
+        "num_customers": 1000, 
         "width": WIDTH, 
         "height": HEIGHT
     }

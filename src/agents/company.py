@@ -33,6 +33,7 @@ class CompanyAgent(Agent):
         exploitation_cost = self.budget * (1 - self.strategy.innovation_factor)
         self.capital -= innovation_cost + exploitation_cost
         self.budget = self.gamma * self.capital
+        self.product.improve()
 
     def buy(self):
         self.capital += self.product.gain_on_product
