@@ -39,13 +39,13 @@ class MarketModel(Model):
     
     # Getters
     def get_companies(self):
-        return self.companies.items()
+        return list(self.companies.values())
 
     def get_company(self, id):
         return self.companies[id]
 
     def get_customers(self):
-        return self.customers.items()
+        return list(self.customers.values())
 
     def get_customer(self, id):
         return self.customers[id]

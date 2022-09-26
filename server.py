@@ -8,18 +8,20 @@ WIDTH = 10
 HEIGHT = 10
 
 def agent_portrayal(agent):
-    color = None
-    if isinstance(agent, CompanyAgent):
-        color = "red"
-    else:
-        color = "green"
-    return {
-        "Shape": "circle",
+    base_props = {
         "Filled": "true",
         "Layer": 0,
-        "r": 0.5,
-        "Color": color
+        "Color": agent.get_color()
     }
+    
+    if isinstance(agent, CompanyAgent):
+        base_props["Shape"] = "circle"
+        base_props["r"] = 0.5
+    else:
+        base_props["Shape"] = "rect"
+        base_props["w"] = 0.5
+        base_props["h"] = 0.5
+    return base_props
 
 grid = mesa.visualization.CanvasGrid(agent_portrayal, WIDTH, HEIGHT, 500, 500)
 server = mesa.visualization.ModularServer(

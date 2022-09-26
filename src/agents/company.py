@@ -21,6 +21,11 @@ class CompanyAgent(Agent):
         self.strategy = BasicStrategy()
         self.innovation_factor = random.random()
         
+        r = lambda: random.randint(0,255)
+        self.color = "#%02X%02X%02X" % (r(),r(),r())
+    
+    def get_color(self):
+        return self.color
 
     # Next actions based on the model context
     def step(self):

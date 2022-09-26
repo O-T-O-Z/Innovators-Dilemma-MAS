@@ -14,19 +14,21 @@ class CustomerAgent(Agent):
         self.alpha = 1  # importance of the proximity for the customer
         self._supplier_company = None
 
+    def get_color(self):
+        return self._supplier_company.get_color() if self._supplier_company  else "gray"
     
     def _evaluate_company_proximity(self, company: CompanyAgent):
         """
         Computes the Euclidean distance from this customer to a Company.
         """
-        return np.linalg.norm(company.position - self.position)
+        return 10000 - np.linalg.norm(company.position - self.position)
         
 
     def _evaluate_decision(self, company: CompanyAgent):
         """
         Gets the decision factor based on a company.
         """
-        choice = min(self.rationality * company.performance, self.satisfaction)
+        choice = min(self.rationality * company.product.performance, self.satisfaction)
         proximity = self._evaluate_company_proximity(company)
         return self.alpha * proximity + choice
 
