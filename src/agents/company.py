@@ -1,64 +1,33 @@
 from mesa import Agent, Model
-import numpy as np
+import random
 from src.strategies.basic import BasicStrategy
+from src.entities.product import Product
 from typing import Tuple
-
-class CompanyProduct():
-
-    def __init__(self, pbounds=[0, 1]) -> None:
-        self.pbounds = pbounds
-        self.x = 0
-        self.performance = 0
-        self.__compute_performance()
-    
-    def __compute_performance(self):
-        val =  1/(1 + np.exp(-self.x))
-        val += 0.5
-        val *= self.pbounds[1] - self.pbounds[0]
-        val += self.pbounds[0]
-        self.performance = val
-        
-    def improve(self):
-        self.x += 1
-        self.__compute_performance()
-    
-    def get_performance(self):
-        return self.performance
         
         
 class CompanyAgent(Agent):
-    """An agent with fixed initial wealth."""
 
-    def __init__(self, unique_id: int, model: Model, x, y):
+    def __init__(self, unique_id: int, model: Model, position: Tuple):
         super().__init__(unique_id, model)
-        self.capital = 100
-        self.product = CompanyProduct()
+
+        self.position = position
+        self.capital = random.randint(100, 10000)
+        self.gamma = 0.4
+        self.budget = self.gamma * self.capital
+
+        self.product = Product()
         self.ncustomers = 0
-        self.position = (x, y)
+        
         self.strategy = BasicStrategy()
-        resources_spent_per_step = 0
-        self.innovation_cost = self.strategy.innovation_factor * resources_spent_per_step
-        self.exploitation_cost = (1-self.strategy.innovation_factor) * resources_spent_per_step
+        self.innovation_factor = random.random()
+        
 
     # Next actions based on the model context
     def step(self):
-        pass
+        innovation_cost = self.budget * self.strategy.innovation_factor
+        exploitation_cost = self.budget * (1 - self.strategy.innovation_factor)
+        self.capital -= innovation_cost + exploitation_cost
+        self.budget = self.gamma * self.capital
 
-    def compute_profit(self):
-        val = self.product.performance * self.ncustomers
-        return val
-
-    def check_empty_cell():
-        pass
-    
-    def explore():
-        pass
-
-    def exploit():
-        pass
-
-    def get_pos():
-        pass
-
-    def get_proximity(pos: Tuple):
-        pass
+    def buy(self):
+        self.capital += self.product.gain_on_product

@@ -11,7 +11,7 @@ def agent_portrayal(agent):
 
 grid = mesa.visualization.CanvasGrid(agent_portrayal, 10, 10, 500, 500)
 server = mesa.visualization.ModularServer(
-    MarketModel, [grid], "Market Model", {"num_agents": 100, "width": 10, "height": 10}
+    MarketModel, [grid], "Market Model", {"num_companies": 5, "num_customers": 20, "width": 10, "height": 10}
 )
 server.port = 8521 # The default
 server.launch()

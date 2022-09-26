@@ -1,5 +1,3 @@
-from mimetypes import init
-
 
 class BasicStrategy:
     def __init__(self) -> None:
