@@ -55,9 +55,9 @@ $$
 - Adopt foreigner candidates (later addition)
 
 # TODO
-- [] remove companies when they die
-- [] modelling of candidate products when they appear
-- [] randomizing improvement rates for candidate products (performance bounds)
-- [] sliders for innovation balance and others
-- [] add strategies
+- [x] remove companies when they die
+- [ ] modelling of candidate products when they appear
+- [ ] randomizing improvement rates for candidate products (performance bounds)
+- [x] sliders for innovation balance and others
+- [ ] add strategies
 

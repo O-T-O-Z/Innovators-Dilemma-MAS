@@ -15,8 +15,8 @@ class Product:
         val += self.pbounds[0]
         self.performance = val
         
-    def improve(self):
-        self.x += 1
+    def improve(self, exploitation_factor):
+        self.x += exploitation_factor
         self.__compute_performance()
     
     def get_performance(self):

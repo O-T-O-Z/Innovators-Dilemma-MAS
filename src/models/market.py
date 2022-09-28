@@ -1,11 +1,11 @@
-from typing import Type, List
+from typing import Type
 import mesa
 import random
 import numpy as np
 from mesa import Model
 from src.agents.company import CompanyAgent
 from src.agents.customer import CustomerAgent
-
+from src import globals
 
 class MarketModel(Model):
     """A model with some number of agents."""
@@ -14,10 +14,9 @@ class MarketModel(Model):
         num_customers, 
         num_companies,
         width, 
-        height,
-        proximity_df,
-        performance_df):
+        height):
         
+
         self.num_customers = num_customers
         self.num_companies = num_companies
         self.width = width
@@ -66,16 +65,24 @@ class MarketModel(Model):
     def _get_free_cell_pos(self):
         rand_idx = random.randint(0, len(self.free_cells) - 1)
         val = self.free_cells.pop(rand_idx)
-        return np.array([val % self.width, val // self.width])
+        return (val % self.width, val // self.width)
 
-    def _spawn_agents_of_class(self, n, class_: Type, ls: List):
+    def _spawn_agents_of_class(self, n, class_: Type, dict_: dict):
         for _ in range(n):
             id = self.get_next_id()
-            agent = class_(id, self, self._get_free_cell_pos())
-            ls[id] = agent
+            position = self._get_free_cell_pos()
+            agent = class_(id, self, np.array(position))
+            dict_[id] = agent
             self.schedule.add(agent)
-            self.grid.place_agent(agent, tuple(agent.position))
+            self.grid.place_agent(agent, position)
+
+    def remove_company_agent(self, id: int):
+        self.grid.remove_agent(self.companies[id])
+        del self.companies[id]
 
     def step(self):
-        self.datacollector.collect(self)
         self.schedule.step()
+        self.datacollector.collect(self)
+        print(globals.sliders["innovation_factor"].value)
+
+

@@ -2,6 +2,7 @@ from src.agents.company import CompanyAgent
 import mesa
 from src.models.market import MarketModel
 from src.agents.company import CompanyAgent
+from src import globals
 #from test import MarketModel
 
 WIDTH = 50
@@ -23,15 +24,18 @@ def agent_portrayal(agent):
         base_props["h"] = 0.2
     return base_props
 
+slider = mesa.visualization.Slider("Innovation Factor", 0, 0, 100)
+print("slider value", slider.value)
+
 model_params = {
     "num_companies": 10, 
     "num_customers": 1000, 
     "width": WIDTH, 
     "height": HEIGHT,
     "title": mesa.visualization.StaticText("Parameters:"),
-    "proximity_df": mesa.visualization.Slider("Proximity Decision Factpr", 20, 1, 50),
-    "performance_df": mesa.visualization.Slider("Performance Decision Factor", 20, 1, 50),
+    **globals.sliders
 }
+
 
 grid = mesa.visualization.CanvasGrid(agent_portrayal, WIDTH, HEIGHT, 500, 500)
 
@@ -43,6 +47,8 @@ server = mesa.visualization.ModularServer(
     "Market Model",
     model_params
 )
+
+
 
 server.port = 8521 # The default
 server.launch()
