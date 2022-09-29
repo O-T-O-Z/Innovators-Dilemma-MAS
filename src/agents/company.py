@@ -1,27 +1,24 @@
-from mesa import Agent, Model
+from mesa import Model
 import random
+from src.agents.grid_agent import GridAgent
 from src.strategies.basic import BasicStrategy
 from src.entities.product import Product
 from typing import Tuple
 
 
-class CompanyAgent(Agent):
+class CompanyAgent(GridAgent):
 
 	def __init__(self,
 	             unique_id: int,
 	             model: Model,
 	             position: Tuple,
 	             strategy: BasicStrategy):
-		super().__init__(unique_id, model)
+		super().__init__(unique_id, model, position)
 
-		self.unique_id = unique_id
-		self.model = model
-		self.position = position
 		self.capital = random.randint(100, 10000)
 		self.gamma = 0.4
 		self.budget = self.gamma * self.capital
 		self.product = Product()
-		self.ncustomers = 0
 		self.strategy = strategy
 
 		r = lambda: random.randint(0, 255)

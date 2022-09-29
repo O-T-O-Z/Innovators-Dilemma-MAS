@@ -1,14 +1,14 @@
-from mesa import Agent, Model
+from mesa import Model
 import numpy as np
-from typing import Tuple, List
+from typing import Tuple
+from src.agents.grid_agent import GridAgent
 from src.agents.company import CompanyAgent
 
 
-class CustomerAgent(Agent):
+class CustomerAgent(GridAgent):
 
 	def __init__(self, unique_id: int, model: Model, position: Tuple):
-		super().__init__(unique_id, model)
-		self.position = position
+		super().__init__(unique_id, model, position)
 		self.satisfaction = 1  # start with full satisfaction
 		self.rationality = 1  # i.e. Apple customers have rationality 0
 		self.alpha = 1  # importance of the proximity for the customer
