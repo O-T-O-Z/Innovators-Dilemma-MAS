@@ -23,18 +23,25 @@ class MarketModel(Model):
 		self.reset()
 
 	def reset(self):
-		self.datacollector = mesa.DataCollector(
-			model_reporters={},
-			agent_reporters={}
-		)
 		self.grid = mesa.space.MultiGrid(self.width, self.height, True)
-		self.schedule = mesa.time.RandomActivation(self)
+		self.schedule = RandomActivationByTypeFiltered(self)
 		self.running = True  # maybe this variable is important?
 		self.companies = {}
 		self.customers = {}
 		self.free_cells = [x for x in range(self.width * self.height)]
 		self.next_id = 0
+
 		self._spawn_agents()
+		reporters = {}
+		i = 0
+		for agent in self.companies.values():
+			reporters[f"Label_{i}"] = lambda m: m.schedule.get_capital(CompanyAgent)
+			i += 1
+		print(reporters)
+		self.datacollector = mesa.DataCollector(
+            reporters
+        )
+		
 
 	# Getters
 	def get_companies(self):
@@ -69,13 +76,13 @@ class MarketModel(Model):
 		for _ in range(self.num_companies):
 			company = CompanyAgent(self.get_next_id(), self, self._get_free_cell_pos(), innovation_factor=random.random())
 			self._add_agent(company, self.companies)
-
+	
 	def _spawn_customers(self):
 		for _ in range(self.num_customers):
 			company = CustomerAgent(self.get_next_id(), self, self._get_free_cell_pos())
 			self._add_agent(company, self.customers)
 
-	def _add_agent(self, agent: GridAgent, dict_: dict):
+	def _add_agent(self, agent, dict_: dict):
 		dict_[agent.get_id()] = agent
 		self.schedule.add(agent)
 		self.grid.place_agent(agent, agent.get_position())
@@ -88,3 +95,12 @@ class MarketModel(Model):
 		self.schedule.step()
 		self.datacollector.collect(self)
 		print(globals.sliders["innovation_factor"].value)
+
+from typing import Type, Callable
+
+
+class RandomActivationByTypeFiltered(mesa.time.RandomActivationByType):
+    def get_capital(self,type_class: Type[mesa.Agent] = None) -> int:
+        for agent in self.agents_by_type[type_class].values():
+            return agent.capital
+        return -100

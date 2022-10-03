@@ -34,7 +34,7 @@ class CompanyAgent(GridAgent):
 	def get_color(self):
 		return self.color
 
-	def innovate(self):
+	def __innovate(self):
 		self.total_innovation += self.innovation_factor * self.rd_quality
 		self.t += 1
 		innovation_cost = self.budget * self.innovation_factor
@@ -50,25 +50,24 @@ class CompanyAgent(GridAgent):
 			self.t = 0
 			self.total_innovation = 0
 
-	def exploit(self):
+	def __exploit(self):
 		self.product.improve(self.exploitation_factor)
 		exploitation_cost = self.budget * self.exploitation_factor
 		self.capital -= exploitation_cost
 
-	def kill(self):
-		self.model.remove_company_agent(self.unique_id)
+	def __life_check(self):
+		if self.capital <= 0:
+			self.model.remove_company_agent(self.unique_id)
 
-	def allocate_budget(self):
+	def __allocate_budget(self):
 		self.budget = self.gamma * self.capital
 
-	# Next actions based on the model context
 	def step(self):
-		self.innovate()
-		self.exploit()
-		# Check if company died
-		if self.capital <= 0:
-			self.kill()
-		self.allocate_budget()
+		self.__innovate()
+		self.__exploit()
+		self.__life_check()
+		self.__allocate_budget()
+
 		print(self.capital, self.innovation_factor)
 	
 	def buy(self):

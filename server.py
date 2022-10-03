@@ -40,10 +40,15 @@ model_params = {
 grid = mesa.visualization.CanvasGrid(agent_portrayal, WIDTH, HEIGHT, 500, 500)
 
 
-
+chart = mesa.visualization.ChartModule([
+    {"Label": "Label_0", "Color": "Black"},
+    {"Label": "Label_1", "Color": "Blue"},
+    {"Label": "Label_2", "Color": "Green"},
+    ],
+                    data_collector_name='datacollector')
 server = mesa.visualization.ModularServer(
     MarketModel, 
-    [grid], 
+    [grid, chart], 
     "Market Model",
     model_params
 )
