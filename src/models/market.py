@@ -14,12 +14,13 @@ from src.models.scheduler import RandomActivationByTypeFiltered
 class MarketModel(Model):
 	"""A model with some number of agents."""
 
-	def __init__(self, num_customers, num_companies, width, height, *args: Any, **kwargs: Any):
+	def __init__(self, num_customers, num_companies, width, height, company_labels, *args: Any, **kwargs: Any):
 		super().__init__(*args, **kwargs)
 		self.num_customers = num_customers
 		self.num_companies = num_companies
 		self.width = width
 		self.height = height
+		self.company_labels = company_labels
 
 		self.reset()
 
@@ -45,7 +46,7 @@ class MarketModel(Model):
 				"""
 				return m.schedule.get_capital(a)
 
-			reporters["Label_" + str(i)] = caller
+			reporters[self.company_labels[i][0]] = caller
 		
 		self.datacollector = mesa.DataCollector(reporters)
 		self.datacollector.collect(self)
@@ -67,8 +68,8 @@ class MarketModel(Model):
 		return val % self.width, val // self.width
 
 	def _spawn_companies(self):
-		for _ in range(self.num_companies):
-			company = CompanyAgent(self.get_next_id(), self, self._get_free_cell_pos(), innovation_factor=random.random())
+		for i in range(self.num_companies):
+			company = CompanyAgent(self.get_next_id(), self, self._get_free_cell_pos(), self.company_labels[i][1], innovation_factor=random.random())
 			self._add_agent(company, self.companies)
 	
 	def _spawn_customers(self):

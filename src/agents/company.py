@@ -11,6 +11,7 @@ class CompanyAgent(GridAgent):
 	             unique_id: int,
 	             model: Model,
 	             position: Tuple,
+				 color: str,
 				 innovation_factor: float = 0.8,
 				 rd_quality: float = 1.0):
 		super().__init__(unique_id, model, position)
@@ -19,9 +20,7 @@ class CompanyAgent(GridAgent):
 		self.gamma = 0.4
 		self.budget = self.gamma * self.capital
 		self.product = Product()
-
-		r = lambda: random.randint(0, 255)
-		self.color = "#%02X%02X%02X" % (r(), r(), r())
+		self.color = color
 
 		self.innovation_factor = innovation_factor
 		self.exploitation_factor = 1 - self.innovation_factor
@@ -29,7 +28,7 @@ class CompanyAgent(GridAgent):
 		self.total_innovation = 0
 		self.rd_quality = rd_quality
 		self.t = 0
-		self.max_innovate_time = 10
+		self.max_innovate_time = 5
 		self.n_customers = 1 # prevent immediate removal
 
 	def get_color(self):
@@ -58,7 +57,6 @@ class CompanyAgent(GridAgent):
 
 	def __life_check(self):
 		if self.n_customers <= 0:
-			print("removed company")
 			self.model.remove_company_agent(self.unique_id)
 		self.n_customers = 0
 
