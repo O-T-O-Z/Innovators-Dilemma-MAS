@@ -82,7 +82,9 @@ class MarketModel(Model):
 		self.grid.place_agent(agent, agent.get_position())
 
 	def remove_company_agent(self, id: int):
-		self.grid.remove_agent(self.companies[id])
+		company = self.companies[id]
+		self.grid.remove_agent(company)
+		self.schedule.remove(company)
 		del self.companies[id]
 
 	def step(self):

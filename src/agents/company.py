@@ -30,6 +30,7 @@ class CompanyAgent(GridAgent):
 		self.rd_quality = rd_quality
 		self.t = 0
 		self.max_innovate_time = 10
+		self.n_customers = 1 # prevent immediate removal
 
 	def get_color(self):
 		return self.color
@@ -56,8 +57,10 @@ class CompanyAgent(GridAgent):
 		self.capital -= exploitation_cost
 
 	def __life_check(self):
-		if self.capital <= 0:
+		if self.n_customers <= 0:
+			print("removed company")
 			self.model.remove_company_agent(self.unique_id)
+		self.n_customers = 0
 
 	def __allocate_budget(self):
 		self.budget = self.gamma * self.capital
@@ -72,3 +75,4 @@ class CompanyAgent(GridAgent):
 	
 	def buy(self):
 		self.capital += self.product.gain_on_product
+		self.n_customers += 1
