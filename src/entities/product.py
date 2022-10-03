@@ -22,3 +22,6 @@ class Product:
 
 	def get_performance(self):
 		return self.performance
+
+	def get_min(self):
+		return self.pbounds[1] / 2

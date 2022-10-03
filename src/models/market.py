@@ -5,9 +5,9 @@ import numpy as np
 from mesa import Model
 from src.agents.grid_agent import GridAgent
 from src.agents.company import CompanyAgent
+from src.agents.whale import Whale
 from src.agents.customer import CustomerAgent
 from src import globals
-from src.strategies.basic import BasicStrategy
 
 
 class MarketModel(Model):
@@ -67,8 +67,7 @@ class MarketModel(Model):
 
 	def _spawn_companies(self):
 		for _ in range(self.num_companies):
-			strategy = BasicStrategy()
-			company = CompanyAgent(self.get_next_id(), self, self._get_free_cell_pos(), strategy)
+			company = CompanyAgent(self.get_next_id(), self, self._get_free_cell_pos(), innovation_factor=random.random())
 			self._add_agent(company, self.companies)
 
 	def _spawn_customers(self):

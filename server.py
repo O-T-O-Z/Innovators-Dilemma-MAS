@@ -5,8 +5,8 @@ from src.agents.company import CompanyAgent
 from src import globals
 #from test import MarketModel
 
-WIDTH = 50
-HEIGHT = 50
+WIDTH = 20
+HEIGHT = 20
 
 def agent_portrayal(agent):
     base_props = {
@@ -29,7 +29,7 @@ print("slider value", slider.value)
 
 model_params = {
     "num_companies": 10, 
-    "num_customers": 1000, 
+    "num_customers": 390, 
     "width": WIDTH, 
     "height": HEIGHT,
     "title": mesa.visualization.StaticText("Parameters:"),
