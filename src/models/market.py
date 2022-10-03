@@ -8,6 +8,7 @@ from src.agents.company import CompanyAgent
 from src.agents.whale import Whale
 from src.agents.customer import CustomerAgent
 from src import globals
+from src.models.scheduler import RandomActivationByTypeFiltered
 
 
 class MarketModel(Model):
@@ -29,36 +30,29 @@ class MarketModel(Model):
 		self.companies = {}
 		self.customers = {}
 		self.free_cells = [x for x in range(self.width * self.height)]
-		self.next_id = 0
-
+		self.id = 0
 		self._spawn_agents()
-		reporters = {}
-		i = 0
-		for agent in self.companies.values():
-			reporters[f"Label_{i}"] = lambda m: m.schedule.get_capital(CompanyAgent)
-			i += 1
-		print(reporters)
-		self.datacollector = mesa.DataCollector(
-            reporters
-        )
+		self.__init_data_collector()
 		
+	def __init_data_collector(self):
+		reporters = {}
 
-	# Getters
-	def get_companies(self):
-		return list(self.companies.values())
+		for i, agent in enumerate(self.companies.values()):
+			def caller(m,a=agent): 
+				"""
+				Whatever you do, never edit this function. Especially the a=agent part.
+				If want to see the end of the world go to: https://stackoverflow.com/questions/54288926/python-loops-and-closures
+				"""
+				return m.schedule.get_capital(a)
 
-	def get_company(self, id):
-		return self.companies[id]
-
-	def get_customers(self):
-		return list(self.customers.values())
-
-	def get_customer(self, id):
-		return self.customers[id]
+			reporters["Label_" + str(i)] = caller
+		
+		self.datacollector = mesa.DataCollector(reporters)
+		self.datacollector.collect(self)
 
 	def get_next_id(self):
-		val = self.next_id
-		self.next_id += 1
+		val = self.id
+		self.id += 1
 		return val
 
 	# Environment logic
@@ -94,13 +88,10 @@ class MarketModel(Model):
 	def step(self):
 		self.schedule.step()
 		self.datacollector.collect(self)
-		print(globals.sliders["innovation_factor"].value)
 
-from typing import Type, Callable
+	def get_companies(self):
+		return list(self.companies.values())
 
+	def get_customers(self):
+		return list(self.customers.values())
 
-class RandomActivationByTypeFiltered(mesa.time.RandomActivationByType):
-    def get_capital(self,type_class: Type[mesa.Agent] = None) -> int:
-        for agent in self.agents_by_type[type_class].values():
-            return agent.capital
-        return -100

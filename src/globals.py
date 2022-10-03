@@ -5,3 +5,7 @@ sliders = {
     "performance_df": mesa.visualization.Slider("Performance Decision Factor", 20, 1, 50),
     "innovation_factor": mesa.visualization.Slider("Innovation Factor", 0, 0, 100)
 }
+
+
+NUM_COMPANIES = 10
+NUM_CUSTOMERS = 390
