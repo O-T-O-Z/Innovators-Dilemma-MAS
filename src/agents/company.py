@@ -7,17 +7,15 @@ from src import utils
 
 class CompanyAgent(GridAgent):
 
-	def __init__(self,
-	             unique_id: int,
-	             model: Model,
-	             position: Tuple,
-				 label: Tuple,
-				 innovation_factor: float = 0.8,
-				 rd_quality: float = 1.0):
+	def __init__(self, unique_id: int, model: Model, position: Tuple, label: Tuple):
 		super().__init__(unique_id, model, position)
 
+		# --- PARAMETERS ---
 		self.capital = random.randint(100, 10000)
-		self.gamma = 0.4
+		self.gamma = 0.9
+		self.max_innovate_time = 5
+		# ------------------
+
 		self.budget = self.gamma * self.capital
 		self.product = Product()
 		self.color = utils.sample_color_rgb_gradient_random(label[2])
@@ -25,25 +23,24 @@ class CompanyAgent(GridAgent):
 
 		self.innovation_factor = label[0]
 		self.exploitation_factor = 1 - self.innovation_factor
-
 		self.total_innovation = 0
-		self.rd_quality = rd_quality
 		self.t = 0
-		self.max_innovate_time = 5
 		self.n_customers = 1 # prevent immediate removal
 
 	def get_color(self):
 		return self.color
 
 	def __innovate(self):
-		self.total_innovation += self.innovation_factor * self.rd_quality
+		self.total_innovation += self.innovation_factor * random.random()
 		self.t += 1
 		innovation_cost = self.budget * self.innovation_factor
 		self.capital -= innovation_cost
 
 		if self.t == self.max_innovate_time:
 			prob = self.total_innovation / self.t
+			print(prob)
 			if prob > random.random():
+				print("new product")
 				lower_bound = self.product.get_min()
 				upper_bound = lower_bound + (random.random())
 				self.product = Product((lower_bound, upper_bound)) # needs new bounds
@@ -57,7 +54,7 @@ class CompanyAgent(GridAgent):
 		self.capital -= exploitation_cost
 
 	def __life_check(self):
-		if self.n_customers <= 0:
+		if self.capital < 1:
 			self.model.remove_company_agent(self.unique_id)
 		self.n_customers = 0
 
@@ -69,8 +66,6 @@ class CompanyAgent(GridAgent):
 		self.__exploit()
 		self.__life_check()
 		self.__allocate_budget()
-
-		print(self.capital, self.innovation_factor)
 	
 	def buy(self):
 		self.capital += self.product.gain_on_product
