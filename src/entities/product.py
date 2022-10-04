@@ -17,7 +17,7 @@ class Product:
 		self.performance = val
 
 	def improve(self, exploitation_factor):
-		self.x += exploitation_factor
+		self.x += exploitation_factor * 0.1
 		self.__compute_performance()
 
 	def get_performance(self):

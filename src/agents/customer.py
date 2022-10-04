@@ -11,7 +11,7 @@ class CustomerAgent(GridAgent):
 		super().__init__(unique_id, model, position)
 		self.satisfaction = 1  # start with full satisfaction
 		self.rationality = 1 # i.e. Apple customers have rationality 0
-		self.alpha = 0.2  # importance of the proximity for the customer
+		self.alpha = 0.5  # importance of the proximity for the customer
 		self._supplier_company = None
 
 	def get_color(self):
@@ -21,7 +21,7 @@ class CustomerAgent(GridAgent):
 		"""
         Computes the Euclidean distance from this customer to a Company.
         """
-		return np.linalg.norm(company.position - self.position)
+		return np.linalg.norm(company.position - self.position) / np.sqrt(self.model.width**2 + self.model.height**2)
 
 	def _evaluate_decision(self, company: CompanyAgent):
 		"""

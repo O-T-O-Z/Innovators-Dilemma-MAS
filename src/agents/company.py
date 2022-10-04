@@ -3,7 +3,7 @@ import random
 from src.agents.grid_agent import GridAgent
 from src.entities.product import Product
 from typing import Tuple
-
+from src import utils
 
 class CompanyAgent(GridAgent):
 
@@ -11,7 +11,7 @@ class CompanyAgent(GridAgent):
 	             unique_id: int,
 	             model: Model,
 	             position: Tuple,
-				 color: str,
+				 label: Tuple,
 				 innovation_factor: float = 0.8,
 				 rd_quality: float = 1.0):
 		super().__init__(unique_id, model, position)
@@ -20,9 +20,10 @@ class CompanyAgent(GridAgent):
 		self.gamma = 0.4
 		self.budget = self.gamma * self.capital
 		self.product = Product()
-		self.color = color
+		self.color = utils.sample_color_rgb_gradient_random(label[2])
+		self.type = label[1]
 
-		self.innovation_factor = innovation_factor
+		self.innovation_factor = label[0]
 		self.exploitation_factor = 1 - self.innovation_factor
 
 		self.total_innovation = 0

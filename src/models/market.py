@@ -9,6 +9,7 @@ from src.agents.whale import Whale
 from src.agents.customer import CustomerAgent
 from src import globals
 from src.models.scheduler import RandomActivationByTypeFiltered
+from src.agents.company_type import CompanyType
 
 
 class MarketModel(Model):
@@ -38,15 +39,15 @@ class MarketModel(Model):
 	def __init_data_collector(self):
 		reporters = {}
 
-		for i, agent in enumerate(self.companies.values()):
-			def caller(m,a=agent): 
+		for i, type_ in enumerate([CompanyType.INNOVATOR, CompanyType.EXPLOITER, CompanyType.BALANCED]):
+			def caller(m,a=type_): 
 				"""
 				Whatever you do, never edit this function. Especially the a=agent part.
 				If want to see the end of the world go to: https://stackoverflow.com/questions/54288926/python-loops-and-closures
 				"""
 				return m.schedule.get_capital(a)
 
-			reporters[self.company_labels[i][0]] = caller
+			reporters[type_.value] = caller
 		
 		self.datacollector = mesa.DataCollector(reporters)
 		self.datacollector.collect(self)
@@ -69,7 +70,7 @@ class MarketModel(Model):
 
 	def _spawn_companies(self):
 		for i in range(self.num_companies):
-			company = CompanyAgent(self.get_next_id(), self, self._get_free_cell_pos(), self.company_labels[i][1], innovation_factor=random.random())
+			company = CompanyAgent(self.get_next_id(), self, self._get_free_cell_pos(), self.company_labels[i])
 			self._add_agent(company, self.companies)
 	
 	def _spawn_customers(self):

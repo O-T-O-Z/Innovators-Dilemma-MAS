@@ -1,11 +1,14 @@
+import enum
 from src.agents.company import CompanyAgent
+from src.agents.company_type import CompanyType
 import mesa
 from src.models.market import MarketModel
 from src.agents.company import CompanyAgent
 from src import globals
 import random
+import itertools
 
-
+enum
 def agent_portrayal(agent):
     base_props = {
         "Filled": "true",
@@ -27,17 +30,18 @@ slider = mesa.visualization.Slider("Innovation Factor", 0, 0, 100)
 
 grid = mesa.visualization.CanvasGrid(agent_portrayal, globals.WIDTH, globals.HEIGHT, 500, 500)
 
+company_labels = [
+    (0, CompanyType.EXPLOITER, "red"), 
+    (0.5, CompanyType.BALANCED, "green"), 
+    (0.7, CompanyType.INNOVATOR, "blue")
+]
 
-def get_random_color():
-    r = lambda: random.randint(0, 255)
-    return "#%02X%02X%02X" % (r(), r(), r())
-
-
-company_labels = [(f"Company_{x}", get_random_color()) for x in range(globals.NUM_COMPANIES)]
-chart_labels = [{"Label": company_labels[i][0], "Color": company_labels[i][1]} for i in range(globals.NUM_COMPANIES)]
+chart_labels = [{"Label": x[1].value, "Color": x[2]} for x in company_labels]
 
 chart = mesa.visualization.ChartModule(chart_labels)
 
+agents_per_class = 5
+company_labels = list(itertools.chain(*[[c] * agents_per_class for c in company_labels]))
 model_params = {
     "num_companies": globals.NUM_COMPANIES, 
     "num_customers": globals.NUM_CUSTOMERS, 
