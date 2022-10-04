@@ -5,7 +5,6 @@ import numpy as np
 from mesa import Model
 from src.agents.grid_agent import GridAgent
 from src.agents.company import CompanyAgent
-from src.agents.whale import Whale
 from src.agents.customer import CustomerAgent
 from src import globals
 from src.models.scheduler import RandomActivationByTypeFiltered
