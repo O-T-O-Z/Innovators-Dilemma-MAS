@@ -3,9 +3,9 @@ import itertools
 from src.agents.company_type import CompanyType
 
 sliders = {
-    "proximity_df": mesa.visualization.Slider("Proximity Decision Factor", 20, 1, 50),
-    "performance_df": mesa.visualization.Slider("Performance Decision Factor", 20, 1, 50),
-    "innovation_factor": mesa.visualization.Slider("Innovation Factor", 0, 0, 100)
+    "alpha": mesa.visualization.Slider("Proximity (alpha) Decision Factor", min_value=0, max_value=1, step=0.1, value=0.5),
+    "gamma": mesa.visualization.Slider("Budget Allocation", min_value=0, max_value=0.9, step=0.1, value=0.9),
+    "innovation_time": mesa.visualization.Slider("Innovation Time", min_value=1, max_value=20, step=1, value=5)
 }
 
 

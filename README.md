@@ -11,6 +11,7 @@ To run the MAS as a browser application, please run `server.py`:
 ```cmd
 python3 server.py
 ``` 
+Note: please reset after changing the sliders for the changes to take effect.
 
 ## Run multiple experiments at once
 To run multiple experiments at once, please run `batch_run.py` and add the optional arguments:
