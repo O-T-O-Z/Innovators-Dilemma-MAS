@@ -27,9 +27,9 @@ class CustomerAgent(GridAgent):
 		"""
         Gets the decision factor based on a company.
         """
-		choice = company.product.performance #min(self.rationality * company.product.performance, self.satisfaction)
+		# choice = min(self.rationality * company.product.performance, self.satisfaction)
 		proximity = self._evaluate_company_proximity(company)
-		return self.alpha * (-proximity) + choice
+		return self.alpha * (-proximity) + company.product.performance
 
 	def _choose_company(self):
 		companies = self.model.get_companies()

@@ -26,6 +26,7 @@ class CompanyAgent(GridAgent):
 		self.total_innovation = 0
 		self.t = 0
 		self.n_customers = 1 # prevent immediate removal
+		self.has_new_product = False
 
 	def get_color(self):
 		return self.color
@@ -35,15 +36,15 @@ class CompanyAgent(GridAgent):
 		self.t += 1
 		innovation_cost = self.budget * self.innovation_factor
 		self.capital -= innovation_cost
+		self.has_new_product = False
 
 		if self.t == self.max_innovate_time:
 			prob = self.total_innovation / self.t
-			print(prob)
 			if prob > random.random():
-				print("new product")
 				lower_bound = self.product.get_min()
 				upper_bound = lower_bound + (random.random())
 				self.product = Product((lower_bound, upper_bound)) # needs new bounds
+				self.has_new_product = True
 			# reset
 			self.t = 0
 			self.total_innovation = 0

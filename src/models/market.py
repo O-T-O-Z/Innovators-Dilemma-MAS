@@ -1,3 +1,4 @@
+from multiprocessing.resource_sharer import stop
 from typing import Type, Any
 import mesa
 import random
@@ -88,9 +89,15 @@ class MarketModel(Model):
 		self.schedule.remove(company)
 		del self.companies[id]
 
+	def check_stop(self):
+		agents = list(self.companies.values())
+		if all([agents[0].type == a.type for a in agents]):
+			self.running = False
+
 	def step(self):
 		self.schedule.step()
 		self.datacollector.collect(self)
+		self.check_stop()
 
 	def get_companies(self):
 		return list(self.companies.values())
