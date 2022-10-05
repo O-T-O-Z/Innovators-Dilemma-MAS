@@ -4,7 +4,7 @@ from src.agents.company_type import CompanyType
 from src import globals
 from tqdm import tqdm
 
-NUM_RUNS = 10
+NUM_RUNS = 1000
 company_labels = [
     (0, CompanyType.EXPLOITER, "red"),
     (0.5, CompanyType.BALANCED, "green"),
@@ -35,5 +35,12 @@ for i in tqdm(range(NUM_RUNS)):
         "agents_left": len(companies_left)
     })
 
-print(data)
-# num iterations, winning class, agents left
+df = {'innovator': 0, 'exploiter': 0, 'balanced': 0}
+for d in data:
+	if d.get('winning_class') == 'innovator':
+		df["innovator"] += 1
+	elif d.get('winning_class') == 'balanced':
+		df["balanced"] += 1
+	elif d.get('winning_class') == 'exploiter':
+		df["exploiter"] += 1
+print(df)
