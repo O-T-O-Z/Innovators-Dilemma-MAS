@@ -44,3 +44,6 @@ for d in data:
 	elif d.get('winning_class') == 'exploiter':
 		df["exploiter"] += 1
 print(df)
+# innovation time {1,3,5}
+# alpha (proximity) {0.25,0.5,0.75}
+# gamma {0.3, 0.6, 0.9}
