@@ -4,8 +4,6 @@ import mesa
 from src.models.market import MarketModel
 from src.agents.company import CompanyAgent
 from src import globals
-import itertools
-import random
 
 def agent_portrayal(agent):
     base_props = {
@@ -42,17 +40,9 @@ company_labels = [
 ]
 
 chart_labels = [{"Label": x[1].value, "Color": x[2]} for x in company_labels]
-
 chart = mesa.visualization.ChartModule(chart_labels)
 
-agents_per_class = 5
-company_labels = list(itertools.chain(*[[c] * agents_per_class for c in company_labels]))
 model_params = {
-    "num_companies": globals.NUM_COMPANIES, 
-    "num_customers": globals.NUM_CUSTOMERS, 
-    "width": globals.WIDTH, 
-    "height": globals.HEIGHT,
-    "company_labels": company_labels,
     "title": mesa.visualization.StaticText("Parameters:"),
     **globals.sliders
 }
