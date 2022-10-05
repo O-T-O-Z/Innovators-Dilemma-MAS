@@ -1,12 +1,14 @@
-from ast import arg
 from src.models.market import MarketModel
 from tqdm import tqdm
 from argparse import ArgumentParser, Namespace
 from typing import List
 import json
+import os
+
+DATA_PATH = "data"
 
 def dump_data(data: List[dict], args: Namespace):
-    filename = f"data/{args.innovation_time}-innovation_time.json"
+    filename = os.join("data", str(args.innovation_time) + "-innovation_time.json")
     with open(filename, 'w') as out:
         json.dump(data, out)
 

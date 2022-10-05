@@ -39,6 +39,8 @@ class MarketModel(Model):
         self._spawn_agents()
         self.__init_data_collector()
 
+        self.raw_data = []
+
     def __init_data_collector(self):
         reporters = {}
 
@@ -91,6 +93,9 @@ class MarketModel(Model):
         company = self.companies[id]
         self.grid.remove_agent(company)
         self.schedule.remove(company)
+
+        self.raw_data.append(company.data)
+
         del self.companies[id]
 
     def check_stop(self):

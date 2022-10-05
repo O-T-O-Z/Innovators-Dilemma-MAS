@@ -29,6 +29,8 @@ class CompanyAgent(GridAgent):
         self.n_customers = 1  # prevent immediate removal
         self.has_new_product = False
 
+        self.data = {"Capital": [self.capital], "New Product": [False], "Type": self.type, "Color": self.color}
+
     def get_color(self):
         return self.color
 
@@ -44,12 +46,13 @@ class CompanyAgent(GridAgent):
             if prob > random.random():
                 lower_bound = self.product.get_min()
                 upper_bound = lower_bound + (random.random())
-                self.product = Product(
-                    (lower_bound, upper_bound))  # needs new bounds
+                self.product = Product((lower_bound, upper_bound))
                 self.has_new_product = True
             # reset
             self.t = 0
             self.total_innovation = 0
+
+        self.data["New Product"].append(self.has_new_product)
 
     def __exploit(self):
         self.product.improve(self.exploitation_factor)
@@ -69,6 +72,8 @@ class CompanyAgent(GridAgent):
         self.__exploit()
         self.__life_check()
         self.__allocate_budget()
+
+        self.data["Capital"].append(self.capital)
 
     def buy(self):
         self.capital += self.product.gain_on_product
