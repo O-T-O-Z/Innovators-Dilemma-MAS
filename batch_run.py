@@ -6,7 +6,7 @@ from typing import List
 import json
 
 def dump_data(data: List[dict], args: Namespace):
-    filename = f"{args.alpha}-alpha.json"
+    filename = f"data/{args.innovation_time}-innovation_time.json"
     with open(filename, 'w') as out:
         json.dump(data, out)
 
@@ -26,6 +26,7 @@ def main():
     assert args.alpha <= 1 and args.alpha >= 0, "Alpha should be in [0,1]!"
 
     data = []
+    print(args)
     for i in tqdm(range(args.num_runs)):
         marketModel = MarketModel(args.gamma, args.innovation_time, args.alpha)
         num_iters = 0
