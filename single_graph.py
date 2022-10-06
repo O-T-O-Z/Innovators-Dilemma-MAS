@@ -6,7 +6,9 @@ import json
 import os
 import time
 
-DATA_PATH = "data"
+PATH = "figures"
+
+plt.figure(figsize=(10,5))
 
 marketModel = MarketModel(gamma=0.9, alpha=0.5, innovation_time=10)
 
@@ -27,18 +29,18 @@ for x in data:
         if n_p:
             plt.plot(steps[i],capital[i], marker='o', color='black') 
 
-plt.xlabel("Time Step")
-plt.ylabel("Agent Capital")
+plt.xlabel("Time Step", fontsize=13)
+plt.ylabel("Capital", fontsize=13)
 
-red = mpatches.Patch(color='indianred', label='Exploiter Agent')
-blue = mpatches.Patch(color='royalblue', label='Innovator Agent')
-green = mpatches.Patch(color='mediumseagreen', label='Balanced Agent')
+red = mpatches.Patch(color='indianred', label='Exploiter')
+blue = mpatches.Patch(color='royalblue', label='Innovator')
+green = mpatches.Patch(color='mediumseagreen', label='Balanced')
 product = Line2D([0], [0], marker='o', markerfacecolor='black', color='white', label='New Product Emerged')
 plt.legend(handles=[red, green, blue, product])
 
 fig_name = "fig_" + str(time.time())
-plt.savefig(os.path.join(DATA_PATH, fig_name + ".pdf"))
-with open(os.path.join(DATA_PATH, fig_name + ".json"), 'w') as out:
+plt.savefig(os.path.join(PATH, fig_name + ".pdf"))
+with open(os.path.join(PATH, fig_name + ".json"), 'w') as out:
     json.dump(data, out)
 
 plt.show()
