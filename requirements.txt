@@ -1,4 +1,6 @@
-numpy==1.23.2 
+numpy==1.23.3
 mesa==1.0.0
 tqdm==4.64.1
 matplotlib==3.5.2
+seaborn==0.11.2
+scipy==1.8.1

@@ -15,7 +15,7 @@ from src.agents.company_type import CompanyType
 class MarketModel(Model):
     """A model with some number of agents."""
 
-    def __init__(self, gamma: float = 0.9, innovation_time: int = 5, alpha: float = 0.5, *args: Any, **kwargs: Any):
+    def __init__(self, gamma: float = 0.3, innovation_time: int = 5, alpha: float = 0.75, *args: Any, **kwargs: Any):
         super().__init__(*args, **kwargs)
         self.num_customers = globals.NUM_CUSTOMERS
         self.num_companies = globals.NUM_COMPANIES

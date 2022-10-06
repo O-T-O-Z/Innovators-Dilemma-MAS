@@ -5,16 +5,17 @@ Please install the requirements of this project first:
 ```cmd
 pip3 install -r requirements.txt
 ```
+Tested on Python 3.10.7
 
 ## Run MAS as a browser application
-To run the MAS as a browser application, please run `server.py`:
+To run the MAS as a browser application, please run [`server.py`](server.py):
 ```cmd
 python3 server.py
 ``` 
-Note: please reset after changing the sliders for the changes to take effect.
+**Note**: please click *reset* after changing the sliders for the changes to take effect.
 
 ## Run multiple experiments at once
-To run multiple experiments at once, please run `batch_run.py` and add the optional arguments:
+To run multiple experiments at once, please run [`batch_run.py`](batch_run.py) and add the optional arguments:
 ```cmd
 python3 batch_run.py NUM_RUNS --gamma GAMMA --alpha ALPHA --innovation_time INNOVATION_TIME
 ```
