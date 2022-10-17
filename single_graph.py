@@ -37,6 +37,7 @@ blue = mpatches.Patch(color='royalblue', label='Innovator')
 green = mpatches.Patch(color='mediumseagreen', label='Balanced')
 product = Line2D([0], [0], marker='o', markerfacecolor='black', color='white', label='New Product Emerged')
 plt.legend(handles=[red, green, blue, product])
+plt.grid(color='#95a5a6', linestyle='-', linewidth=1, alpha=0.2)
 
 fig_name = "fig_" + str(time.time())
 plt.savefig(os.path.join(PATH, fig_name + ".pdf"))
