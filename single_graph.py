@@ -27,7 +27,7 @@ for x in data:
     plt.plot(steps, capital, color=x['Color'])
     for i, n_p in enumerate(x["New Product"]):
         if n_p:
-            plt.plot(steps[i],capital[i], marker='o', color='black') 
+            plt.plot(steps[i],capital[i], marker='o', markersize=8, color=x['Color']) 
 
 plt.xlabel("Time Step", fontsize=13)
 plt.ylabel("Capital", fontsize=13)
