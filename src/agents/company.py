@@ -39,16 +39,11 @@ class CompanyAgent(GridAgent):
 
     def __innovate(self):
         self.total_innovation += self.innovation_factor * random.random()
-        # print("adding:", self.innovation_factor * random.random())
         self.t += 1.0
         innovation_cost = self.budget * self.innovation_factor
         self.capital -= innovation_cost
-        self.has_new_product = False
 
-        #print("innovation time", self.max_innovate_time, self.total_innovation)
         if self.candidate_product:
-            print("candidate product exists for ", self.type)
-
             self.candidate_product.improve(self.exploitation_factor)
 
             # Switch to new product?
@@ -59,19 +54,15 @@ class CompanyAgent(GridAgent):
             elif self.global_t - self.candidate_product_created_at >= 50:
                 self.candidate_product = None
 
-            #print(self.global_t, self.t, self.candidate_product)
-
         # Research and explore
         elif self.t >= self.max_innovate_time:
-            #print("here")
             prob = self.total_innovation / self.t
-            print(self.type, self.total_innovation, self.t)
-            #print(prob, self.total_innovation)
+            prob *= self.innovation_factor
             if prob >= random.random():
-                #print("new product emerged", self.global_t, self.t)
+                print("New product introduced", self.global_t)
                 lower_bound = (self.product.pbounds[0] + self.product.pbounds[1]) / 2
-                upper_bound = lower_bound + (random.random()*1.1)
-                # self.product = Product((lower_bound, upper_bound))
+                perf_interval = self.product.pbounds[1] - self.product.pbounds[0]
+                upper_bound = lower_bound + (random.random()*perf_interval)
                 self.candidate_product = Product((lower_bound, upper_bound))
                 self.candidate_product_created_at = self.global_t
                 self.has_new_product = True

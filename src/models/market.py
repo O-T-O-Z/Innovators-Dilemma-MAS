@@ -113,3 +113,5 @@ class MarketModel(Model):
 
     def get_customers(self):
         return list(self.customers.values())
+
+    
