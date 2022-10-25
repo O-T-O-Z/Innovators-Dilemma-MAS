@@ -14,10 +14,10 @@ class CompanyAgent(GridAgent):
         # --- PARAMETERS ---
         self.capital = random.randint(100, 200)
         self.gamma = model.gamma
-        self.max_patience = 50
-        self.innovation_time = 20
+        self.max_patience = model.max_patience
         # ------------------
 
+        self.innovation_time = 20
         self.product = Product(innovation_time=self.innovation_time)
         self.color = utils.sample_color_rgb_gradient_random(label[2])
         self.type = label[1]
@@ -49,12 +49,12 @@ class CompanyAgent(GridAgent):
                 self.candidate_product = None
             # Give up on candidate product?
             elif self.global_t - self.candidate_product_created_at >= self.max_patience:
-                print("lost patience")
+                # print("lost patience")
                 self.candidate_product = None
         # Research and explore
         else:
             if random.random() <= self.innovation_factor * (self.global_t % self.innovation_time) / self.innovation_time:
-                print("New product introduced", self.global_t)
+                # print("New product introduced", self.global_t)
                 lower_bound = (self.product.pbounds[0] + self.product.pbounds[1]) / 2
                 perf_interval = self.product.pbounds[1] - self.product.pbounds[0]
                 upper_bound = lower_bound + (random.random()*perf_interval)

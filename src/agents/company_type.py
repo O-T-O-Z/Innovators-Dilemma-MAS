@@ -1,6 +1,14 @@
 from enum import Enum
 
 class CompanyType(str, Enum):
-	INNOVATOR = "average innovator capital"
-	EXPLOITER = "average exploiter capital"
-	BALANCED = "average balanced capital"
+	F0 = "F0"
+	F1 = "F1"
+	F2 = "F2"
+	F3 = "F3"
+	F4 = "F4"
+	F5 = "F5"
+	F6 = "F6"
+	F7 = "F7"
+	F8 = "F8"
+	F9 = "F9"
+	F10 = "F10"

@@ -15,7 +15,7 @@ from src.agents.company_type import CompanyType
 class MarketModel(Model):
     """A model with some number of agents."""
 
-    def __init__(self, gamma: float = 0.3, innovation_time: int = 5, alpha: float = 0.75, *args: Any, **kwargs: Any):
+    def __init__(self, gamma: float = 0.3, max_patience: int = 50, alpha: float = 0.5, *args: Any, **kwargs: Any):
         super().__init__(*args, **kwargs)
         self.num_customers = globals.NUM_CUSTOMERS
         self.num_companies = globals.NUM_COMPANIES
@@ -24,7 +24,7 @@ class MarketModel(Model):
         self.company_labels = globals.COMPANY_LABELS
 
         self.gamma = gamma
-        self.innovation_time = innovation_time
+        self.max_patience = max_patience
         self.alpha = alpha
         self.reset()
 
@@ -44,7 +44,7 @@ class MarketModel(Model):
     def __init_data_collector(self):
         reporters = {}
 
-        for i, type_ in enumerate([CompanyType.INNOVATOR, CompanyType.EXPLOITER, CompanyType.BALANCED]):
+        for i, type_ in enumerate(CompanyType):
             def caller(m, a=type_):
                 """
                 If want to see the end of the world go to: https://stackoverflow.com/questions/54288926/python-loops-and-closures

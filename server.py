@@ -33,10 +33,23 @@ slider = mesa.visualization.Slider("Innovation Factor", 0, 0, 100)
 
 grid = mesa.visualization.CanvasGrid(agent_portrayal, globals.WIDTH, globals.HEIGHT, 500, 500)
 
+# company_labels = [
+#     (0, CompanyType.EXPLOITER, "red"), 
+#     (0.5, CompanyType.BALANCED, "green"), 
+#     (0.7, CompanyType.INNOVATOR, "blue")
+# ]
 company_labels = [
-    (0, CompanyType.EXPLOITER, "red"), 
-    (0.5, CompanyType.BALANCED, "green"), 
-    (0.7, CompanyType.INNOVATOR, "blue")
+    (0, CompanyType.F0, "red"),
+    (0.1, CompanyType.F1, "red"),
+    (0.2, CompanyType.F2, "red"),
+    (0.3, CompanyType.F3, "red"),
+    (0.4, CompanyType.F4, "red"),
+    (0.5, CompanyType.F5, "red"),
+    (0.6, CompanyType.F6, "red"),
+    (0.7, CompanyType.F7, "red"),
+    (0.8, CompanyType.F8, "red"),
+    (0.9, CompanyType.F9, "red"),
+    (1, CompanyType.F10, "red"),
 ]
 
 chart_labels = [{"Label": x[1].value, "Color": x[2]} for x in company_labels]
