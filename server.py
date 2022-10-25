@@ -40,16 +40,16 @@ grid = mesa.visualization.CanvasGrid(agent_portrayal, globals.WIDTH, globals.HEI
 # ]
 company_labels = [
     (0, CompanyType.F0, "red"),
-    (0.1, CompanyType.F1, "red"),
-    (0.2, CompanyType.F2, "red"),
-    (0.3, CompanyType.F3, "red"),
-    (0.4, CompanyType.F4, "red"),
-    (0.5, CompanyType.F5, "red"),
-    (0.6, CompanyType.F6, "red"),
-    (0.7, CompanyType.F7, "red"),
-    (0.8, CompanyType.F8, "red"),
-    (0.9, CompanyType.F9, "red"),
-    (1, CompanyType.F10, "red"),
+    (0.1, CompanyType.F1, "purple"),
+    (0.2, CompanyType.F2, "black"),
+    (0.3, CompanyType.F3, "blue"),
+    (0.4, CompanyType.F4, "yellow"),
+    (0.5, CompanyType.F5, "green"),
+    (0.6, CompanyType.F6, "pink"),
+    (0.7, CompanyType.F7, "orange"),
+    (0.8, CompanyType.F8, "cyan"),
+    (0.9, CompanyType.F9, "magenta"),
+    (1, CompanyType.F10, "brown"),
 ]
 
 chart_labels = [{"Label": x[1].value, "Color": x[2]} for x in company_labels]

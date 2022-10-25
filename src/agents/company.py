@@ -40,6 +40,7 @@ class CompanyAgent(GridAgent):
     def __innovate(self):
         self.total_innovation += self.innovation_factor * random.random()
 
+        self.has_new_product = False
         if self.candidate_product:
             self.candidate_product.improve(self.exploitation_factor)
 
