@@ -19,7 +19,7 @@ class CompanyAgent(GridAgent):
 
         self.innovation_time = 20
         self.product = Product(innovation_time=self.innovation_time)
-        self.color = utils.sample_color_rgb_gradient_random(label[2])
+        self.color = label[2]
         self.type = label[1]
 
         self.innovation_factor = label[0]

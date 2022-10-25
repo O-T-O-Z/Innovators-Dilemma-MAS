@@ -15,19 +15,35 @@ NUM_RUNS = 50
 #         json.dump(data, out)
 
 def count(data):
-    df = {'innovator': 0, 'exploiter': 0, 'balanced': 0}
+    df = {'F0': 0, 'F1': 0, 'F2': 0, 'F3': 0, 'F4': 0, 'F5': 0, 'F6': 0, 'F7': 0, 'F8': 0, 'F9': 0, 'F10': 0}
     for d in data:
-        if d == CompanyType.INNOVATOR.value:
-            df["innovator"] += 1
-        elif d == CompanyType.BALANCED.value:
-            df["balanced"] += 1
-        elif d == CompanyType.EXPLOITER.value:
-            df["exploiter"] += 1
+        if d == CompanyType.F0.value:
+            df["F0"] += 1
+        elif d == CompanyType.F1.value:
+            df["F1"] += 1
+        elif d == CompanyType.F2.value:
+            df["F2"] += 1
+        elif d == CompanyType.F3.value:
+            df["F3"] += 1
+        elif d == CompanyType.F4.value:
+            df["F4"] += 1
+        elif d == CompanyType.F5.value:
+            df["F5"] += 1
+        elif d == CompanyType.F6.value:
+            df["F6"] += 1
+        elif d == CompanyType.F7.value:
+            df["F7"] += 1
+        elif d == CompanyType.F8.value:
+            df["F8"] += 1
+        elif d == CompanyType.F9.value:
+            df["F9"] += 1
+        elif d == CompanyType.F10.value:
+            df["10"] += 1
     return df
 
 
-innovation_time = [1, 3, 5, 10]
-alpha = [0.25, 0.5, 0.75]
+max_patience = [10, 20, 50]
+alpha = [0, 0.5, 1]
 gamma = [0.3, 0.6, 0.9]
 
 raw_data = []
@@ -57,7 +73,7 @@ def run_exp(comb):
 def test(comb):
     run_exp(comb)
 
-all_combs = itertools.product(gamma, innovation_time, alpha)
+all_combs = itertools.product(gamma, max_patience, alpha)
 # for comb in all_combs:
 #     run_exp(comb)
 
