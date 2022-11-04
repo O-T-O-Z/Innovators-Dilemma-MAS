@@ -13,4 +13,5 @@ To run the MAS as a browser application, please run [`server.py`](server.py):
 python3 server.py
 ``` 
 **Note**: please click *reset* after changing the sliders for the changes to take effect.
+
 **Note #2**: experiments take a long time to converge (about 2 min.)
