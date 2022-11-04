@@ -11,10 +11,11 @@ PATH = "figures"
 
 plt.figure(figsize=(10,5))
 
-read_data = False
+read_data = True
+read_file = "scene_2.json"
 
 if read_data:
-    with open(os.path.join(PATH, "test.json")) as f:
+    with open(os.path.join(PATH, read_file)) as f:
         data = json.load(f)
 else:
     marketModel = MarketModel()
@@ -43,7 +44,7 @@ plt.ylabel("Capital", fontsize=13)
 patches = []
 
 for val, enum, color in globals.company_labels:
-    patches.append(mpatches.Patch(label="F = " + str(val), color=color))
+    patches.append(mpatches.Patch(label=enum.value, color=color))
 
 product = Line2D([0], [0], marker='o', markerfacecolor='black', color='white', label='New Product Emerged')
 plt.legend(handles = patches + [product])
@@ -51,7 +52,9 @@ plt.grid(color='#95a5a6', linestyle='-', linewidth=1, alpha=0.2)
 
 fig_name = "fig_" + str(time.time())
 plt.savefig(os.path.join(PATH, fig_name + ".pdf"))
-with open(os.path.join(PATH, fig_name + ".json"), 'w') as out:
-    json.dump(data, out)
+
+if not read_data:
+    with open(os.path.join(PATH, fig_name + ".json"), 'w') as out:
+        json.dump(data, out)
 
 plt.show()
