@@ -9,11 +9,6 @@ import time
 DATA_PATH = "data"
 NUM_RUNS = 50
 
-# def dump_data(data, name):
-#     filename = os.join(DATA_PATH, str(args.innovation_time) + "-innovation_time.json")
-#     with open(filename, 'w') as out:
-#         json.dump(data, out)
-
 def count(data):
     df = {'F0': 0, 'F1': 0, 'F2': 0, 'F3': 0, 'F4': 0, 'F5': 0, 'F6': 0, 'F7': 0, 'F8': 0, 'F9': 0, 'F10': 0}
     for d in data:
@@ -38,7 +33,7 @@ def count(data):
         elif d == CompanyType.F9.value:
             df["F9"] += 1
         elif d == CompanyType.F10.value:
-            df["10"] += 1
+            df["F10"] += 1
     return df
 
 
@@ -74,18 +69,12 @@ def test(comb):
     run_exp(comb)
 
 all_combs = itertools.product(gamma, max_patience, alpha)
-# for comb in all_combs:
-#     run_exp(comb)
 
 
-pool = Pool(14)
+pool = Pool(None)
 raw_data = pool.map(run_exp, all_combs)
 
 print(raw_data)
 
 with open("raw_data2", "wb") as f:
     pickle.dump(raw_data, f)
-
-# with open("raw_data2", "rb") as f:
-#     arr = pickle.load(f)
-     

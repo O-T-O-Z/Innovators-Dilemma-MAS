@@ -13,10 +13,4 @@ To run the MAS as a browser application, please run [`server.py`](server.py):
 python3 server.py
 ``` 
 **Note**: please click *reset* after changing the sliders for the changes to take effect.
-
-## Run multiple experiments at once
-To run multiple experiments at once, please run [`batch_run.py`](batch_run.py) and add the optional arguments:
-```cmd
-python3 batch_run.py NUM_RUNS --gamma GAMMA --alpha ALPHA --innovation_time INNOVATION_TIME
-```
-Please see `python3 batch_run.py -h` for help.
+**Note #2**: experiments take a long time to converge (about 2 min.)

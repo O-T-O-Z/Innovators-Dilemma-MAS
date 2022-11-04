@@ -33,11 +33,6 @@ slider = mesa.visualization.Slider("Innovation Factor", 0, 0, 100)
 
 grid = mesa.visualization.CanvasGrid(agent_portrayal, globals.WIDTH, globals.HEIGHT, 500, 500)
 
-# company_labels = [
-#     (0, CompanyType.EXPLOITER, "red"), 
-#     (0.5, CompanyType.BALANCED, "green"), 
-#     (0.7, CompanyType.INNOVATOR, "blue")
-# ]
 company_labels = [
     (0, CompanyType.F0, "red"),
     (0.1, CompanyType.F1, "purple"),
@@ -62,25 +57,10 @@ model_params = {
 
 table = {}
 
-def label(model, num_iter=8):
-    display_str = ""
-    for company in model.get_companies():
-        id_ = company.get_id()
-        if company.has_new_product:
-            table[id_] = 1
-            
-    for key, val in table.items():
-        if val > num_iter:
-            table[key] = 0
-        elif val != 0:
-            table[key] += 1
-            display_str += "Company " + str(key) + " has a new product! "
-    return display_str
-
 
 server = mesa.visualization.ModularServer(
     MarketModel,
-    [label, grid, chart],
+    [grid, chart],
     "Market Model",
     model_params
 )
